@@ -1,5 +1,7 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
+const toId = mongoose.Types.ObjectId;
 
 const Movie = require('../models/movie');
 
@@ -22,12 +24,20 @@ router.get('/:id', getMovie, (req, res) => {
 // Creating one
 router.post('/', async (req, res) => {
     const movie = new Movie({
-        name: req.body.name,
-        subscribedToChannel: req.body.subscribedToChannel
+        user_id: [toId(req.body.user_id)],
+        original_title: req.body.original_title,
+        id: req.body.id,
+        backdrop_path: req.body.backdrop_path,
+        poster_path: req.body.poster_path,
+        genre_ids: req.body.genre_ids,
+        release_date: req.body.release_date,
+        overview: req.body.overview,
+        created_at: req.body.created_at,
+        updated_at: req.body.updated_at
     })
     try {
-        const newSubscriber = await movie.save()
-        res.status(201).json(newSubscriber)
+        const newMovie = await movie.save()
+        res.status(201).json(newMovie)
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
@@ -35,15 +45,13 @@ router.post('/', async (req, res) => {
 
 // Updating One
 router.patch('/:id', getMovie, async (req, res) => {
-    if (req.body.name != null) {
-        res.movie.name = req.body.name
+    if (req.body.user_id != null) {
+        res.movie.user_id = [...res.movie.user_id, req.body.user_id]
     }
-    if (req.body.subscribedToChannel != null) {
-        res.movie.subscribedToChannel = req.body.subscribedToChannel
-    }
+
     try {
-        const updatedSubscriber = await res.movie.save()
-        res.json(updatedSubscriber)
+        const updatedMovie = await res.movie.save()
+        res.json(updatedMovie)
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
