@@ -32,7 +32,7 @@ app.use(session({
     cookie: {
         httpOnly: false,
         sameSite: 'none',
-        secure: false
+        secure: true
     }
 }));
 
