@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(session({
     secret: 'archivalstreamingbase',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
 const loginRouter = require('./routes/login');
