@@ -30,12 +30,6 @@ app.use(session({
     secret: 'archivalstreamingbase',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        sameSite: false,
-        secure: false,
-        maxAge: 1000,
-        httpOnly: true,
-    }
 }));
 
 const loginRouter = require('./routes/login');
