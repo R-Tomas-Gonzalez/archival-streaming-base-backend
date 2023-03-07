@@ -5,7 +5,7 @@ const express = require('express');
 const session = require('express-session');
 const app = express();
 app.use(cors({
-    origin: ['http://localhost:3001', 'https://archival-streaming-base-01.netlify.app/'],
+    origin: 'http://localhost:3001',
     credentials: true
 }))
 
