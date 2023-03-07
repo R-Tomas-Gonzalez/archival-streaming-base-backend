@@ -27,6 +27,7 @@ db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
 app.use(session({
+    proxy: true,
     secret: 'archivalstreamingbase',
     resave: false,
     saveUninitialized: false,
