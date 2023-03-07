@@ -13,7 +13,13 @@ app.use(cors({
 
 let sess = {
     secret: 'archivalstreamingbase',
-    cookie: {}
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: false,
+        sameSite: 'none',
+        secure: true
+    }
 };
 
 if (app.get('env') === 'production') {
