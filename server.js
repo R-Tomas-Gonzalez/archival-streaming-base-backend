@@ -30,7 +30,12 @@ app.use(session({
     proxy: true,
     secret: 'archivalstreamingbase',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: false,
+        sameSite: 'none',
+        secure: true
+    }
 }));
 
 const loginRouter = require('./routes/login');
