@@ -6,6 +6,7 @@ const session = require('express-session');
 const app = express();
 app.use(cors({
     origin: 'http://localhost:3001',
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
     credentials: true
 }))
 
