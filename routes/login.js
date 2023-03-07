@@ -3,6 +3,7 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    console.log(req.session);
     if (req.session.user) {
         res.json({
             user: req.session.user,
