@@ -4,10 +4,24 @@ const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
 const app = express();
+
+
 app.use(cors({
     origin: 'http://localhost:3001',
     credentials: true
 }))
+
+let sess = {
+    secret: 'archivalstreamingbase',
+    cookie: {}
+};
+
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(session(sess))
 
 const mongoose = require('mongoose');
 
@@ -25,17 +39,7 @@ db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
-app.use(session({
-    proxy: true,
-    secret: 'archivalstreamingbase',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: false,
-        sameSite: 'none',
-        secure: true
-    }
-}));
+
 
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
