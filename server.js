@@ -28,7 +28,13 @@ app.use(express.json());
 app.use(session({
     secret: 'archivalstreamingbase',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        sameSite: false,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 1000,
+        httpOnly: true,
+    }
 }));
 
 const loginRouter = require('./routes/login');
