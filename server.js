@@ -6,7 +6,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:3001',
+    origin: 'https://archival-streaming-base-01.netlify.app/',
     methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
     credentials: true
 }))
@@ -27,15 +27,6 @@ db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
-// app.use(session({
-//     secret: 'archivalstreamingbase',
-//     resave: false,
-//     saveUninitialized: false,
-//     store: MongoStore.create({
-//         mongoUrl: process.env.DATABASE_URL,
-//         client: db.getClient(),
-//     })
-// }));
 
 app.use(session({
     proxy: true,
