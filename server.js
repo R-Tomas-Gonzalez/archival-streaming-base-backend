@@ -33,11 +33,6 @@ app.use(session({
     secret: 'archivalstreamingbase',
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        httpOnly: false,
-        sameSite: 'none',
-        secure: true
-    },
     store: MongoStore.create({
         mongoUrl: process.env.DATABASE_URL,
         client: db.getClient(),
