@@ -3,6 +3,7 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const app = express();
 app.use(cors({
     origin: 'http://localhost:3001',
@@ -26,6 +27,16 @@ db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
+// app.use(session({
+//     secret: 'archivalstreamingbase',
+//     resave: false,
+//     saveUninitialized: false,
+//     store: MongoStore.create({
+//         mongoUrl: process.env.DATABASE_URL,
+//         client: db.getClient(),
+//     })
+// }));
+
 app.use(session({
     proxy: true,
     secret: 'archivalstreamingbase',
@@ -35,7 +46,11 @@ app.use(session({
         httpOnly: false,
         sameSite: 'none',
         secure: true
-    }
+    },
+    store: MongoStore.create({
+        mongoUrl: process.env.DATABASE_URL,
+        client: db.getClient(),
+    })
 }));
 
 const loginRouter = require('./routes/login');
