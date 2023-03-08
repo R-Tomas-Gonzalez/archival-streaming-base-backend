@@ -25,28 +25,25 @@ const connectDB = async () => {
 
 const db = mongoose.connection
 db.on('error', (error) => console.error(error));
-db.once('open', () =>
-    app.use(express.json()),
+db.once('open', () => console.log('Connected to Database'));
 
-    app.use(session({
-        proxy: true,
-        secret: 'archivalstreamingbase',
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            httpOnly: false,
-            sameSite: 'none',
-            secure: true
-        },
-        store: MongoStore.create({
-            mongoUrl: process.env.DATABASE_URL,
-            client: db.getClient(),
-        })
-    }))
+app.use(express.json());
 
-);
-
-
+app.use(session({
+    proxy: true,
+    secret: 'archivalstreamingbase',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: false,
+        sameSite: 'none',
+        secure: true
+    },
+    store: MongoStore.create({
+        mongoUrl: process.env.DATABASE_URL,
+        client: db.getClient(),
+    })
+}));
 
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
