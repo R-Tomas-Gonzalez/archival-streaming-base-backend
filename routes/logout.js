@@ -3,7 +3,6 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-    console.log(req)
     req.session.destroy();
     res.clearCookie('connect.sid')
     return res.json({

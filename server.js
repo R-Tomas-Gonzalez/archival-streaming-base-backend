@@ -7,7 +7,7 @@ const MongoStore = require('connect-mongo');
 const app = express();
 app.set('trust proxy', 1);
 app.use(cors({
-    origin: 'http://localhost:3001',
+    origin: 'https://archival-streaming-base-01.netlify.app',
     methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
     credentials: true
 }))
