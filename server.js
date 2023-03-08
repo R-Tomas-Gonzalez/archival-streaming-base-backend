@@ -5,6 +5,7 @@ const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const app = express();
+app.set('trust proxy', 1);
 app.use(cors({
     origin: 'https://archival-streaming-base-01.netlify.app/',
     methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
@@ -33,6 +34,11 @@ app.use(session({
     secret: 'archivalstreamingbase',
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        httpOnly: false,
+        sameSite: 'none',
+        secure: true
+    },
     store: MongoStore.create({
         mongoUrl: process.env.DATABASE_URL,
         client: db.getClient(),
