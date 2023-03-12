@@ -8,7 +8,7 @@ const app = express();
 app.set('trust proxy', 1);
 app.use(cors({
     origin: 'https://archival-streaming-base-01.netlify.app',
-    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    methods: ['POST', 'PUT', 'PATCH', 'GET', 'OPTIONS', 'HEAD'],
     credentials: true
 }))
 

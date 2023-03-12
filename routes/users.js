@@ -22,4 +22,41 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:_id', getUser, (req, res) => {
+    res.json(res.user)
+})
+
+router.patch('/:_id', getUser, async (req, res) => {
+    if (req.body.movie != null) {
+        res.user.movies = [...res.user.movies, req.body.movie];
+    }
+
+    if (req.body.movies != null) {
+        res.user.movies = req.body.movies;
+    }
+
+    try {
+        const updatedUser = await res.user.save();
+        res.json(updatedUser);
+    } catch (error) {
+        res.status(400).json({ message: err.message });
+    }
+})
+
+
+async function getUser(req, res, next) {
+    let user
+    try {
+        user = await User.findOne({ _id: req.params._id })
+        if (user == null) {
+            return res.status(404).json({ message: 'Cannot find user' })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+
+    res.user = user
+    next()
+}
+
 module.exports = router;
