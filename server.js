@@ -47,11 +47,9 @@ app.use(session({
 
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
-const moviesRouter = require('./routes/movies');
 const usersRouter = require('./routes/users');
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
-app.use('/movies', moviesRouter);
 app.use('/users', usersRouter);
 
 connectDB().then(() => {

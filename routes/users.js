@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-const toId = mongoose.Types.ObjectId;
 
 const User = require('../models/user');
 
@@ -26,13 +25,30 @@ router.get('/:_id', getUser, (req, res) => {
     res.json(res.user)
 })
 
-router.patch('/:_id', getUser, async (req, res) => {
+router.patch('/:_id/movies', getUser, async (req, res) => {
     if (req.body.movie != null) {
         res.user.movies = [...res.user.movies, req.body.movie];
     }
 
     if (req.body.movies != null) {
         res.user.movies = req.body.movies;
+    }
+
+    try {
+        const updatedUser = await res.user.save();
+        res.json(updatedUser);
+    } catch (error) {
+        res.status(400).json({ message: err.message });
+    }
+})
+
+router.patch('/:_id/games', getUser, async (req, res) => {
+    if (req.body.game != null) {
+        res.user.games = [...res.user.games, req.body.game];
+    }
+
+    if (req.body.games != null) {
+        res.user.games = req.body.games;
     }
 
     try {

@@ -18,6 +18,14 @@ const userSchema = new mongoose.Schema({
     movies: {
         type: Array,
         required: false
+    },
+    games: {
+        type: Array,
+        required: false
+    },
+    photos: {
+        type: Array,
+        required: false
     }
 })
 
