@@ -59,6 +59,23 @@ router.patch('/:_id/games', getUser, async (req, res) => {
     }
 })
 
+router.patch('/:_id/images', getUser, async (req, res) => {
+    if (req.body.image != null) {
+        res.user.images = [...res.user.images, req.body.image];
+    }
+
+    if (req.body.images != null) {
+        res.user.images = req.body.images;
+    }
+
+    try {
+        const updatedUser = await res.user.save();
+        res.json(updatedUser);
+    } catch (error) {
+        res.status(400).json({ message: err.message });
+    }
+})
+
 
 async function getUser(req, res, next) {
     let user
